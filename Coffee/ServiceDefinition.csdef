@@ -7,6 +7,7 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
       <Setting name="StorageConnectionString" />
+      <Setting name="WebBaseAddress" />      
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

@@ -2,7 +2,7 @@
 using Coffee.WorkerRole.Messages;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Coffee.WorkerRole.LogChangesToTableStorage
+namespace Coffee.WorkerRole.Workers.LogChangesToTableStorage
 {
     public class ScaleLogTableEntity : TableEntity
     {

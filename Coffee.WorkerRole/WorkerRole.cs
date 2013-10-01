@@ -2,7 +2,8 @@
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using Coffee.WorkerRole.LogChangesToTableStorage;
+using Coffee.WorkerRole.Workers.LogChangesToTableStorage;
+using Coffee.WorkerRole.Workers.PushToWeb;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace Coffee.WorkerRole
@@ -14,9 +15,10 @@ namespace Coffee.WorkerRole
 
         public WorkerRole()
         {
-            _workers = new[]
+            _workers = new IWorker[]
             {
-                new LogChangesToTableStorageWorker()
+                new LogChangesToTableStorageWorker(),
+                new PushToWebWorker()
             };
         }
 

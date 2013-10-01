@@ -3,7 +3,7 @@ using Coffee.WorkerRole.Messages;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace Coffee.WorkerRole.LogChangesToTableStorage
+namespace Coffee.WorkerRole.Workers.LogChangesToTableStorage
 {
     public class LogChangesToTableStorageWorker : IWorker
     {

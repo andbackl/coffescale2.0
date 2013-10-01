@@ -23,14 +23,12 @@ namespace Coffee.WorkerRole.LogChangesToTableStorage
             _client.OnMessage(OnMessageArrived, messageOptions);
         }
 
-        private void OnMessageArrived(BrokeredMessage message)
+        private async void OnMessageArrived(BrokeredMessage message)
         {
-            var dataEvent = CoffeeDataChangedEvent.CreateFromBrokeredMessage(message);
+            var dataEvent = await CoffeeDataChangedEvent.CreateFromBrokeredMessage(message);
 
-            var tableEntity = ScaleLogTableEntity.CreateFromEvent(dataEvent);
-            _table.Execute(TableOperation.InsertOrReplace(tableEntity));
-
-            message.Complete();
+            var tableEntity = ScaleLogTableEntity.CreateFromEvent(dataEvent);            
+            await _table.ExecuteAsync(TableOperation.InsertOrReplace(tableEntity));                
         }
 
         private void OnExceptionReceived(object sender, ExceptionReceivedEventArgs e)
@@ -42,7 +40,7 @@ namespace Coffee.WorkerRole.LogChangesToTableStorage
         public void OnStart()
         {
             _client = Azure.CreateSubscriptionClient("WeightToTableStorage");
-            _table = Azure.CreateTable("ScaleLog");
+            _table = Azure.CreateTable("ScaleLog");            
         }
 
         public void OnStop()

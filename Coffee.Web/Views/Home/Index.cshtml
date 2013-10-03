@@ -1,2 +1,26 @@
-﻿<h2>Finns det kaffe?</h2>
-<p>Det finns <span id="weight">en okänd mängd</span> kaffe.</p>
+﻿<html>
+<head>
+    <title>Finns det kaffe?</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.0.3.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.0.0-rc1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+</head>
+    <body>
+        <h2>Finns det kaffe?</h2>
+        <p>Kaffebryggaren väger just nu <span id="weight">okänt antal</span> gram.</p>
+    </body>
+    <script type="text/javascript">
+        $(function () {
+            var coffeHubProxy = $.connection.coffeeHub;
+            
+            coffeHubProxy.client.coffeeDataChanged = function (item) {
+                console.log(item);
+                $("#weight").text(item.Weight);
+            };
+            
+            $.connection.hub.start()
+                .done(function () { console.log('Now connected, connection ID=' + $.connection.hub.id); })
+                .fail(function () { console.log('Could not Connect!'); });
+        });
+    </script>
+</html>

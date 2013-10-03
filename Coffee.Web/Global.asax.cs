@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Microsoft.AspNet.SignalR;
 
 namespace Coffee.Web
 {
@@ -19,6 +17,8 @@ namespace Coffee.Web
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            GlobalHost.DependencyResolver.UseServiceBus(ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"], "Coffe");
         }
     }
 }

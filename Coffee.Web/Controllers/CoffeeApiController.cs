@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web.Http;
+using Coffee.Web.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace Coffee.Web.Controllers
 {
@@ -7,6 +9,7 @@ namespace Coffee.Web.Controllers
     {
         public void Post(CoffeeDataChangedEvent item)
         {
+            GlobalHost.ConnectionManager.GetHubContext<CoffeeHub>().Clients.All.CoffeeDataChanged(item);
         }
     }
 

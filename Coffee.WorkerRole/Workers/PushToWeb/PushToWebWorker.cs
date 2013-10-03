@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using Coffee.WorkerRole.Messages;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
@@ -29,7 +30,9 @@ namespace Coffee.WorkerRole.Workers.PushToWeb
         private async void OnMessageArrived(BrokeredMessage message)
         {
             var dataEvent = await CoffeeDataChangedEvent.CreateFromBrokeredMessage(message);
-            await _httpClient.PostAsync("CoffeeDataChanged", new StringContent(await JsonConvert.SerializeObjectAsync(dataEvent)));
+            var requestContent = new StringContent(await JsonConvert.SerializeObjectAsync(dataEvent));
+            requestContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            await _httpClient.PostAsync("", requestContent);
         }
 
         private void OnExceptionReceived(object sender, ExceptionReceivedEventArgs e)
@@ -41,7 +44,7 @@ namespace Coffee.WorkerRole.Workers.PushToWeb
         public void OnStart()
         {
             _serviceBusClient = Azure.CreateSubscriptionClient("PushToWeb");
-            _httpClient = new HttpClient { BaseAddress = new Uri(CloudConfigurationManager.GetSetting("WebBaseAddress")) };
+            _httpClient = new HttpClient { BaseAddress = new Uri(CloudConfigurationManager.GetSetting("WebBaseAddress")) };            
         }
 
         public void OnStop()

@@ -30,3 +30,4 @@ _ReSharper*/
 *.cscfg
 packages/
 !NuGet.exe
+Coffee.SendTestMessage/App.config

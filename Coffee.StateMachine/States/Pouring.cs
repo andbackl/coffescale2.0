@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Coffee.StateMachine.States
 {
@@ -7,7 +6,7 @@ namespace Coffee.StateMachine.States
     {
         public override void Update(long elapsedTimeMillis)
         {
-            if (Weight > Configuration.WeightWithFilterAndEmptyCan)
+            if (Weight > Configuration.WeightWithFilterAndEmptyCanMax)
             {
                 Trace.WriteLine("Can returned, changing state.");
                 NextState = new NotFull();

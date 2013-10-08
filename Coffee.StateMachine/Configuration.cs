@@ -4,23 +4,18 @@
     {
         public const int MaxHistorySize = 10;
 
-        public const int BrewingTime = 6 * 60 * 1000; // 6 minutes
+        public const int BrewingTime = (6 * 60 * 1000) + (10 * 1000); // 6 minutes + 10 sek
 
-        public const int CanWeight = 200;
-        public const int CoffeWeight = 500;
-        public const int WetFilterWeight = 300;
-
-
-        public const int WeightWithFilterWithoutCan = 1800;
-        public const int WeightWithoutFilterAndCan = 1500;
+        public const int WeightWithFilterWithoutCan = 2500;
+        public const int WeightWithFilterWithoutCanMin = WeightWithFilterWithoutCan - 100;
+        public const int WeightWithFilterWithoutCanMax = WeightWithFilterWithoutCan + 100;
 
         public const int WeightWithFilterAndFullCan = 4000;
-        public const int WeightWithFilterAndFullCanMax = WeightWithFilterAndFullCan + 200;
+        public const int WeightWithFilterAndFullCanMax = WeightWithFilterAndFullCan + 100;
         public const int WeightWithFilterAndFullCanMin = WeightWithFilterAndFullCan - 200;
 
-
-        public const int WeightWithFilterAndEmptyCan = 2000;
-        public const int WeightWithFilterAndEmptyCanMin = WeightWithFilterAndEmptyCan - 60;
-        public const int WeightWithFilterAndEmptyCanMax = WeightWithFilterAndEmptyCan + 60;
+        public const int WeightWithFilterAndEmptyCan = 2900;
+        public const int WeightWithFilterAndEmptyCanMin = WeightWithFilterAndEmptyCan - 100;
+        public const int WeightWithFilterAndEmptyCanMax = WeightWithFilterAndEmptyCan + 100;
     }
 }

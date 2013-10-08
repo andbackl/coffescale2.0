@@ -6,7 +6,7 @@ namespace Coffee.StateMachine.States
     {
         public override void Update(long elapsedTimeMillis)
         {
-            if (Weight >= Configuration.WeightWithFilterAndFullCan)
+            if (Weight >= Configuration.WeightWithFilterAndFullCanMin && Weight < Configuration.WeightWithFilterAndFullCanMax)
             {
                 Trace.WriteLine("Max weight reached, changing state.");
                 NextState = new Brewing();

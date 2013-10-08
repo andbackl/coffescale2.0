@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Coffee.WorkerRole.Workers.LogChangesToTableStorage;
-using Coffee.WorkerRole.Workers.PushToWeb;
+using Coffee.WorkerRole.Workers.StateMachinePushToWeb;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace Coffee.WorkerRole
@@ -17,8 +17,8 @@ namespace Coffee.WorkerRole
         {
             _workers = new IWorker[]
             {
-                new LogChangesToTableStorageWorker(),
-                new PushToWebWorker()
+                new LogChangesToTableStorageWorker(),                
+                new StateMachineWorker()
             };
         }
 

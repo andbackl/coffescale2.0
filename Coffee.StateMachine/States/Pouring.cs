@@ -6,9 +6,9 @@ namespace Coffee.StateMachine.States
     {
         public override void Update(long elapsedTimeMillis)
         {
-            if (Weight > Configuration.WeightWithFilterAndEmptyCanMax)
+            if (Weight > Configuration.WeightWithFilterAndEmptyCanMin)
             {
-                Trace.WriteLine("Can returned, changing state.");
+                Debug.WriteLine("Can returned, changing state.");
                 NextState = new NotFull();
             }
             base.Update(elapsedTimeMillis);

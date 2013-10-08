@@ -11,6 +11,18 @@ namespace Coffee.Web.Controllers
         {
             GlobalHost.ConnectionManager.GetHubContext<CoffeeHub>().Clients.All.CoffeeDataChanged(item);
         }
+
+        public void Put(CoffeeDataTick tick)
+        {
+            GlobalHost.ConnectionManager.GetHubContext<CoffeeHub>().Clients.All.CoffeeDataTick(tick);
+        }
+    }
+
+    public class CoffeeDataTick
+    {
+        public string StateName { get; set; }
+        public long ElapsedTime { get; set; }
+        public int Weight { get; set; }
     }
 
     public class CoffeeDataChangedEvent

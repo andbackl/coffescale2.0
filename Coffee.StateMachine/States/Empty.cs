@@ -8,7 +8,7 @@ namespace Coffee.StateMachine.States
         {
             if (Weight >= Configuration.WeightWithFilterWithoutCanMin && Weight < Configuration.WeightWithFilterWithoutCanMax)
             {
-                Trace.WriteLine("Under empty weight reached, changing state.");
+                Debug.WriteLine("Under empty weight reached, changing state.");
                 NextState = new Preparing();
             }
             base.Update(elapsedTimeMillis);

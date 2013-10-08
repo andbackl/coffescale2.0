@@ -7,15 +7,20 @@
 </head>
     <body>
         <h2>Finns det kaffe?</h2>
-        <p>Kaffebryggaren väger just nu <span id="weight">okänt antal</span> gram.</p>
+        <p>State: <span id="state"></span></p>
+        <p>Elapsed time: <span id="elapsedTime"></span>s</p>
+        <p>Weight: <span id="weight"></span></p>
     </body>
     <script type="text/javascript">
         $(function () {
             var coffeHubProxy = $.connection.coffeeHub;
             
-            coffeHubProxy.client.coffeeDataChanged = function (item) {
-                console.log(item);
-                $("#weight").text(item.Weight);
+            coffeHubProxy.client.coffeeDataTick = function (tick) {
+                console.log(tick.StateName);
+                console.log(tick.ElapsedTime);
+                $("#state").text(tick.StateName);
+                $("#elapsedTime").text(tick.ElapsedTime / 1000);
+                $("#weight").text(tick.Weight);
             };
             
             $.connection.hub.start()

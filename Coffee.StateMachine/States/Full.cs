@@ -8,7 +8,7 @@ namespace Coffee.StateMachine.States
         {
             if (Weight < Configuration.WeightWithFilterAndFullCan)
             {
-                Trace.WriteLine("Not max weight, changing state.");
+                Debug.WriteLine("Not max weight, changing state.");
                 NextState = new NotFull();
             }
             base.Update(elapsedTimeMillis);

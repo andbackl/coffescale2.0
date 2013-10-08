@@ -16,7 +16,7 @@ namespace Coffee.StateMachine.States
             _timeRemaining -= elapsedTimeMillis;
             if (_timeRemaining <= 0)
             {
-                Trace.WriteLine("Time limit reached, changing state.");
+                Debug.WriteLine("Time limit reached, changing state.");
                 NextState = new Full();
             }
             base.Update(elapsedTimeMillis);

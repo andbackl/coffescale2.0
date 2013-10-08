@@ -83,10 +83,18 @@
     <Compile Include="Workers\LogChangesToTableStorage\LogChangesToTableStorageWorker.cs" />
     <Compile Include="Workers\LogChangesToTableStorage\ScaleLogTableEntity.cs" />
     <Compile Include="Workers\PushToWeb\PushToWebWorker.cs" />
+    <Compile Include="Workers\StateMachinePushToWeb\StateMachineWorker.cs" />
+    <Compile Include="Workers\StateMachinePushToWeb\WebPoster.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coffee.StateMachine\Coffee.StateMachine.csproj">
+      <Project>{0DBC8CCE-4BF5-4858-8C8C-C55FBB238EAD}</Project>
+      <Name>Coffee.StateMachine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

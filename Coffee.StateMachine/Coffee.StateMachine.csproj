@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoffeStateMachine.cs" />
+    <Compile Include="CoffeeStateMachine.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="NotificationService.cs" />
+    <Compile Include="ICoffeeObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="States\Brewing.cs" />
     <Compile Include="States\Empty.cs" />

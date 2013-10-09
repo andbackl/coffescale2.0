@@ -13,7 +13,8 @@
     <div class="container">
         <div class="jumbotron">
             <h1 id="state">Unknown</h1>
-            <p>Coffee time!</p>
+            <p id="numberOfCups">Coffee time!</p>
+            
         </div>
     </div>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
@@ -25,6 +26,11 @@
                 console.log(tick.StateName);
                 console.log(tick.ElapsedTime);
                 $("#state").text(tick.StateName);
+                if (tick.NumberOfCups) {
+                    $("#numberOfCups").text("Just nu finns det " + tick.NumberOfCups + " koppar kaffe!");
+                } else {
+                    $("#numberOfCups").text("");
+                }
             };
 
             $.connection.hub.start()

@@ -6,7 +6,8 @@ namespace Coffee.StateMachine.States
     {
         private long _timeRemaining;
 
-        public Brewing()
+        public Brewing(int weight, ICoffeeObserver observer)
+            : base(weight, observer)
         {
             _timeRemaining = Configuration.BrewingTime;
         }
@@ -17,9 +18,20 @@ namespace Coffee.StateMachine.States
             if (_timeRemaining <= 0)
             {
                 Debug.WriteLine("Time limit reached, changing state.");
-                NextState = new Full();
+                NextState = new Full(Weight, Observer);
             }
             base.Update(elapsedTimeMillis);
+        }
+
+        public override object GetValues()
+        {
+            return new
+            {
+                StateName = GetType().Name,
+                ElapsedTime,
+                Weight,
+                TimeRemaining = _timeRemaining
+            };
         }
     }
 }

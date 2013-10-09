@@ -4,7 +4,7 @@
     {
         public const int MaxHistorySize = 10;
 
-        public const int BrewingTime = (6 * /*60 */ 1000) + (10 * 1000); // 6 minutes + 10 sek
+        public const int BrewingTime = (6 * 60 * 1000) + (10 * 1000); // 6 minutes + 10 sek
 
         public const int WeightWithFilterWithoutCan = 2500;
         public const int WeightWithFilterWithoutCanMin = WeightWithFilterWithoutCan - 100;

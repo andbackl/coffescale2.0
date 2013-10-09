@@ -1,31 +1,36 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
     <title>Finns det kaffe?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.0.3.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.0.0-rc1.min.js"></script>
     <script src="~/signalr/hubs"></script>
+    <link href="@Url.Content("~/Content/bootstrap/bootstrap.css")" rel="stylesheet" media="screen">
+    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" media="screen">
 </head>
-    <body>
-        <h2>Finns det kaffe?</h2>
-        <p>State: <span id="state"></span></p>
-        <p>Elapsed time: <span id="elapsedTime"></span>s</p>
-        <p>Weight: <span id="weight"></span></p>
-    </body>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 id="state">Unknown</h1>
+            <p>Coffee time!</p>
+        </div>
+    </div>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script type="text/javascript">
         $(function () {
             var coffeHubProxy = $.connection.coffeeHub;
-            
+
             coffeHubProxy.client.coffeeDataTick = function (tick) {
                 console.log(tick.StateName);
                 console.log(tick.ElapsedTime);
                 $("#state").text(tick.StateName);
-                $("#elapsedTime").text(tick.ElapsedTime / 1000);
-                $("#weight").text(tick.Weight);
             };
-            
+
             $.connection.hub.start()
                 .done(function () { console.log('Now connected, connection ID=' + $.connection.hub.id); })
                 .fail(function () { console.log('Could not Connect!'); });
         });
     </script>
+</body>
 </html>

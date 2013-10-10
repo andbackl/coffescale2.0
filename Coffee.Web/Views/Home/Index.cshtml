@@ -1,13 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
 <html>
 <head>
     <title>Finns det kaffe?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.0.3.min.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.0.0-rc1.min.js"></script>
-    <script src="~/signalr/hubs"></script>
-    <link href="@Url.Content("~/Content/bootstrap/bootstrap.css")" rel="stylesheet" media="screen">
-    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" media="screen">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.0.3.min.js"></script>    
+    @Styles.Render("~/css/bundle")
 </head>
 <body>
     <div class="container">
@@ -17,7 +15,8 @@
             
         </div>
     </div>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @Scripts.Render("~/js/bundle")    
+    <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
         $(function () {
             var coffeHubProxy = $.connection.coffeeHub;

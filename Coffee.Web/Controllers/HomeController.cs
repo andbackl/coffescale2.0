@@ -23,5 +23,10 @@ namespace Coffee.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult HallerUpp()
+        {
+            return View();
+        }
     }
 }

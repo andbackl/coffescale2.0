@@ -165,6 +165,7 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\css\site.css" />
+    <Content Include="Content\images\nocoffee.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -188,6 +189,7 @@
     <Content Include="Views\Home\Forbereder.cshtml" />
     <Content Include="Views\Home\Tom.cshtml" />
     <Content Include="Views\Home\Klar.cshtml" />
+    <Content Include="Views\Home\HallerUpp.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

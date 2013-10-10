@@ -1,13 +1,8 @@
-﻿<div class="jumbotron text-center">
+﻿<div class="jumbotron text-center" data-bind="with: states[state()]">
     <h1>Det finns kaffe</h1>
-    <p>5 koppar</p>
+    <p><span data-bind="text: numberOfCups()"></span> koppar</p>
     <div class="panel panel-default" style="margin-left: -30px">
-        <div class="panel-body text-left">
-            <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
-            <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
-            <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
-            <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
-            <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
+        <div class="panel-body text-left" data-bind="foreach: new Array(numberOfCups())">
             <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
         </div>
     </div>

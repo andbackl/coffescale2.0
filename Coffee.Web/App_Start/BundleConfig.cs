@@ -12,7 +12,8 @@ namespace Coffee.Web
 
             bundles.Add(new ScriptBundle("~/js/bundle").Include(
                 "~/Scripts/bootstrap.js",
-                "~/Scripts/jquery.signalR-2.0.0-rc1.js"));            
+                "~/Scripts/jquery.signalR-2.0.0-rc1.js",
+                "~/Scripts/knockout-2.3.0.js"));
         }
     }
 }

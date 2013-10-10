@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+
+
+<div id="coffeescale">
+    <div data-bind="if: brewing()">
+        @Html.Partial("Brygger")    
+    </div>
+    <div data-bind="if: preparing()">
+        @Html.Partial("Forbereder")
+    </div>
+    <div data-bind="if: done()">
+        @Html.Partial("Klar")
+    </div>
+    <div data-bind="if: empty()">
+        @Html.Partial("Tom")
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function() {
+            function Done() {
+                var self = this;
+                this.numberOfCups = ko.observable();
+                this.init = function (data) {
+                    console.log("init done");
+                    self.numberOfCups(data.NumberOfCups);
+                };
+            }
+
+            function Empty() {
+                var self = this;
+                this.init = function (data) {
+                    console.log("init empty");
+                };
+            }
+
+            function Brewing() {
+                var self = this;
+                this.timeLeft = ko.observable("3:10");
+                this.init = function (data) {
+                    self.timeLeft(data.TimeRemaining);
+                    console.log("init brewing");
+                };
+            }
+
+            function Preparing() {
+                var self = this;
+                this.init = function(data) {
+                    console.log("init preparing");
+                };
+            }
+
+
+            function CoffeeScaleViewModel(options) {
+                var self = this;
+                (function() {
+                    var done = new Done();
+                    self.states = {
+                        Pouring: done,
+                        Full: done,
+                        NotFull: done,
+                        Brewing: new Brewing(),
+                        Preparing: new Preparing(),
+                        Empty: new Empty()
+                    };
+                })();                
+
+
+                this.state = ko.observable("Empty");
+
+                this.brewing = ko.computed(function() {
+                    return self.state() === "Brewing";
+                });
+
+                this.preparing = ko.computed(function() {
+                    return self.state() === "Preparing";
+                });
+
+                this.done = ko.computed(function() {
+                    return self.state() === "Full" || self.state() === "NotFull" || self.state() === "Pouring";
+                });
+
+                this.empty = ko.computed(function() {
+                    return self.state() === "Empty";
+                });
+
+
+                var coffeHubProxy = $.connection.coffeeHub;
+                coffeHubProxy.client.coffeeDataTick = function(tick) {
+                    console.log(tick.StateName);
+                    console.log(tick.ElapsedTime);
+
+                    self.state(tick.StateName);
+                    self.states[tick.StateName].init(tick);
+                };
+
+                $.connection.hub.start()
+                    .done(function() { console.log('Now connected, connection ID=' + $.connection.hub.id); })
+                    .fail(function() { console.log('Could not Connect!'); });
+
+            }
+
+            var options = {};
+            ko.applyBindings(new CoffeeScaleViewModel(options), document.getElementById("coffeescale"));
+        });
+    </script>
+}

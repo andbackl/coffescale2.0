@@ -1,0 +1,57 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kaffestatus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.0.3.min.js"></script>
+    @Styles.Render("~/css/bundle")
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">Kaffestatus</a>
+        </div>        
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vyer <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("Tom", "Home")">Tom</a></li>
+                        <li><a href="@Url.Action("Forbereder", "Home")">Förbereder</a></li>
+                        <li><a href="@Url.Action("Brygger", "Home")">Brygger</a></li>
+                        <li><a href="@Url.Action("Klar", "Home")">Klar</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/js/bundle")
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var coffeHubProxy = $.connection.coffeeHub;
+
+            coffeHubProxy.client.coffeeDataTick = function (tick) {
+                console.log(tick.StateName);
+                console.log(tick.ElapsedTime);
+                $("#state").text(tick.StateName);
+                if (tick.NumberOfCups) {
+                    $("#numberOfCups").text("Just nu finns det " + tick.NumberOfCups + " koppar kaffe!");
+                } else {
+                    $("#numberOfCups").text("");
+                }
+            };
+
+            $.connection.hub.start()
+                .done(function () { console.log('Now connected, connection ID=' + $.connection.hub.id); })
+                .fail(function () { console.log('Could not Connect!'); });
+        });
+    </script>
+</body>
+</html>

@@ -7,8 +7,8 @@ namespace Coffee.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/css/bundle").Include(
-                "~/Content/bootstrap/bootstrap.css", 
-                "~/Content/bootstrap/site.css"));
+                "~/Content/css/bootstrap.css", 
+                "~/Content/css/site.css"));
 
             bundles.Add(new ScriptBundle("~/js/bundle").Include(
                 "~/Scripts/bootstrap.js",

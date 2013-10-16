@@ -1,9 +1,10 @@
 ﻿<div class="jumbotron text-center" data-bind="with: states[state()]">
     <h1>Det finns kaffe</h1>
-    <p><span data-bind="text: numberOfCups()"></span> koppar</p>
+    <p data-bind="visible: !pouring()"><span data-bind="text: numberOfCups()"></span> koppar</p>
+    <p data-bind="visible: pouring()">Någon tar kaffe!</p>
     <div class="panel panel-default" style="margin-left: -30px">
-        <div class="panel-body text-left" data-bind="foreach: new Array(numberOfCups())">
-            <img src="http://www.halcro.org/comctr/images/images/coffee_cup.gif" style="width: 190px" />
+        <div class="panel-body text-left" data-bind="foreach: new Array(numberOfCups()), css: {test: pouring()}">
+            <img style="width: 196px" src="http://www.halcro.org/comctr/images/images/coffee_cup.gif"/>
         </div>
     </div>
 </div>

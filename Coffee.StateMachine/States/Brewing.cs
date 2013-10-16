@@ -1,15 +1,15 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Coffee.StateMachine.States
 {
     public class Brewing : State
     {
-        private long _timeRemaining;
+        private long _timeRemaining = Configuration.BrewingTime;
 
         public Brewing(int weight, ICoffeeObserver observer)
             : base(weight, observer)
         {
-            _timeRemaining = Configuration.BrewingTime;
         }
 
         public override void Update(long elapsedTimeMillis)
@@ -30,8 +30,15 @@ namespace Coffee.StateMachine.States
                 StateName = GetType().Name,
                 ElapsedTime,
                 Weight,
-                TimeRemaining = _timeRemaining
+                TimeRemaining = _timeRemaining,
+                BrewingDone = GetBrewingDoneTime()
             };
+        }
+
+        private long GetBrewingDoneTime()
+        {
+            return (long) (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
+                                   .TotalMilliseconds + _timeRemaining);
         }
     }
 }

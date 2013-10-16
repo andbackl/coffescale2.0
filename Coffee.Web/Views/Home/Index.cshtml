@@ -28,33 +28,66 @@
         $(function() {
             function Done() {
                 var self = this;
-                this.numberOfCups = ko.observable();
-                this.init = function (data) {
-                    console.log("init done");
-                    self.numberOfCups(data.NumberOfCups);
+                this.numberOfCups = ko.observable(0);
+                this.pouring = ko.observable(true);
+                this.init = function(data) {
+                    var hasNumberOfCups = data.NumberOfCups != null || data.NumberOfCups != undefined;
+                    if (hasNumberOfCups) {
+                        self.numberOfCups(Math.abs(data.NumberOfCups));
+                    }
+                    self.pouring(!hasNumberOfCups);
                 };
             }
 
             function Empty() {
                 var self = this;
-                this.init = function (data) {
-                    console.log("init empty");
+                this.init = function(data) {
+
                 };
             }
+            
 
             function Brewing() {
                 var self = this;
-                this.timeLeft = ko.observable("3:10");
-                this.init = function (data) {
+                this.timeLeft = ko.observable("");
+                this.brewingDone = ko.observable();
+                this.progress = ko.observable("0%");
+
+                this.init = function(data) {
                     self.timeLeft(data.TimeRemaining);
-                    console.log("init brewing");
+                    self.brewingDone(new Date(data.BrewingDone));
+
+                    var brewingDone = new Date(data.BrewingDone);
+                    var startTime = new Date();
+                    var totalTime = brewingDone - startTime;
+
+                    var progressBar = function() {
+                        setTimeout(function() {
+                            self.updateRemaining();
+                            var now = new Date();
+                            var progress = ((now - startTime) / totalTime) * 100;
+                            if (progress <= 100) {
+                                self.progress(progress + "%");
+                                progressBar();
+                            }
+                        }, 100);
+                    };
+                    progressBar();
                 };
+                this.updateRemaining = function() {
+                    var time = new Date(self.brewingDone() - new Date());
+                    var seconds = time.getSeconds();
+                    if (seconds <= 9) {
+                        seconds = "0" + seconds;
+                    }
+                    self.timeLeft(time.getMinutes() + ":" + seconds);
+                };
+
             }
 
             function Preparing() {
                 var self = this;
                 this.init = function(data) {
-                    console.log("init preparing");
                 };
             }
 
@@ -71,7 +104,7 @@
                         Preparing: new Preparing(),
                         Empty: new Empty()
                     };
-                })();                
+                })();
 
 
                 this.state = ko.observable("Empty");

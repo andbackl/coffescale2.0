@@ -11,7 +11,12 @@ namespace Coffee.StateMachine.States
 
         public override void Update(long elapsedTimeMillis)
         {
-            if (Weight < Configuration.WeightWithFilterAndFullCan)
+            if (Weight >= Configuration.WeightWithFilterWithoutCanMin && Weight < Configuration.WeightWithFilterWithoutCanMax)
+            {
+                Debug.WriteLine("Can removed, changing state.");
+                NextState = new Pouring(Weight, Observer);
+            }
+            else if (Weight < Configuration.WeightWithFilterAndFullCan)
             {
                 Debug.WriteLine("Not max weight, changing state.");
                 NextState = new NotFull(Weight, Observer);

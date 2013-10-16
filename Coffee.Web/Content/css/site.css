@@ -1,1 +1,18 @@
-﻿
+﻿@-moz-keyframes blink {0%{opacity:0.5;} 50%{opacity:0.1;} 100%{opacity:0.5;}}
+@-ms-keyframes blink {0%{opacity:0.5;} 50%{opacity:0.1;} 100%{opacity:0.5;}}
+
+@-webkit-keyframes blink {0%{opacity:0.5;} 50%{opacity:0.1;} 100%{opacity:0.5;}}
+@keyframes blink {0%{opacity:0.5;} 50%{opacity:0.1;} 100%{opacity:0.5;}} /* Opera and prob css3 final iteration */
+
+.test img:last-of-type {
+    -moz-transition:all 1s ease-in-out;
+    -webkit-transition:all 1s ease-in-out;
+    -o-transition:all 1s ease-in-out;
+    -ms-transition:all 1s ease-in-out;
+    transition:all 1s ease-in-out;
+    /* order: name, direction, duration, iteration-count, timing-function */  
+    -moz-animation:blink normal 1s infinite ease-in-out; /* Firefox */
+    -webkit-animation:blink normal 1s infinite ease-in-out; /* Webkit */
+    -ms-animation:blink normal 1s infinite ease-in-out; /* IE */
+    animation:blink normal 1s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}​

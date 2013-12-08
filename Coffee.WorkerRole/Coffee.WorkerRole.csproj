@@ -80,6 +80,7 @@
     <Compile Include="Messages\CoffeeDataChangedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
+    <Compile Include="Workers\HeartbeatMonitor\HeartbeatMonitorWorker.cs" />
     <Compile Include="Workers\LogChangesToTableStorage\LogChangesToTableStorageWorker.cs" />
     <Compile Include="Workers\LogChangesToTableStorage\ScaleLogTableEntity.cs" />
     <Compile Include="Workers\PushToWeb\PushToWebWorker.cs" />

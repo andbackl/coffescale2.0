@@ -15,14 +15,14 @@ namespace Coffee.SendTestMessage
 
             var coffeeDataChangedEvent = new CoffeeDataChangedEvent
             {
-                SerialNumber = "1", 
+                SerialNumber = args.Length > 1 ? args[1] : "unknown", 
                 Date = DateTime.UtcNow, 
                 Status = 4, 
                 Weight = Convert.ToInt32(args[0])
             };
 
             var messageBodyStream = new MemoryStream(Encoding.Default.GetBytes(JsonConvert.SerializeObject(coffeeDataChangedEvent)));
-            topicClient.Send(new BrokeredMessage(messageBodyStream, true));
+            topicClient.Send(new BrokeredMessage(messageBodyStream, true) { Label = "dataChanged"});
             Console.WriteLine("Message sent");
         }
     }

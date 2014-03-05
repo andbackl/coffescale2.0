@@ -10,13 +10,11 @@ namespace Coffee.StateMachine
     {
         private State _currentState;
         private int _weight = Configuration.WeightWithFilterAndEmptyCan;
-        private readonly Queue<int> WeightHistory = new Queue<int>();
-        private ICoffeeObserver _observer;
+        private readonly Queue<int> _weightHistory = new Queue<int>();
 
         public CoffeeStateMachine(ICoffeeObserver observer)
         {
-            _observer = observer;
-            _currentState = new Empty(_weight, _observer);
+            _currentState = new Empty(_weight, observer);
             Active = true;
             Task.Factory.StartNew(Run);
         }
@@ -25,11 +23,11 @@ namespace Coffee.StateMachine
         {
             Debug.WriteLine("Update with weight " + weight);
             _weight = weight;
-            if (WeightHistory.Count > Configuration.MaxHistorySize)
+            if (_weightHistory.Count > Configuration.MaxHistorySize)
             {
-                WeightHistory.Dequeue();
+                _weightHistory.Dequeue();
             }
-            WeightHistory.Enqueue(weight);
+            _weightHistory.Enqueue(weight);
         }
 
         private void Run()
@@ -40,7 +38,7 @@ namespace Coffee.StateMachine
                 _currentState.Update(timer.ElapsedMilliseconds);
                 _currentState = _currentState.NextState;
                 _currentState.Weight = _weight;
-                _currentState.WeightHistory = WeightHistory;
+                _currentState.WeightHistory = _weightHistory;
                 timer.Restart();
                 Thread.Sleep(500);
             }

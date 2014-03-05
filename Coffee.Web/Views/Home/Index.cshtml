@@ -3,7 +3,7 @@
 }
 
 
-<div id="coffeescale">
+<div id="coffeescale" data-bind="foreach: coffeeScales">
     <div data-bind="if: brewing()">
         @Html.Partial("Brygger")    
     </div>
@@ -92,8 +92,10 @@
             }
 
 
-            function CoffeeScaleViewModel(options) {
+            function CoffeeScaleViewModel(options, scaleId) {
                 var self = this;
+                this.scaleId = scaleId;
+
                 (function() {
                     var done = new Done();
                     self.states = {
@@ -123,26 +125,40 @@
 
                 this.empty = ko.computed(function() {
                     return self.state() === "Empty";
-                });
+                });               
+            }
 
+            function CoffeeScalesViewModel(options) {
+                var self = this;
+
+                this.coffeeScales = ko.observableArray();
 
                 var coffeHubProxy = $.connection.coffeeHub;
-                coffeHubProxy.client.coffeeDataTick = function(tick) {
+                coffeHubProxy.client.coffeeDataTick = function (tick, scaleId) {
+                    console.log("ScaleId: " + scaleId);
                     console.log(tick.StateName);
                     console.log(tick.ElapsedTime);
 
-                    self.state(tick.StateName);
-                    self.states[tick.StateName].init(tick);
+                    var scale = ko.utils.arrayFirst(self.coffeeScales(), function(item) {
+                        return item.scaleId == scaleId;
+                    });
+                    
+                    if (!scale) {
+                        scale = new CoffeeScaleViewModel(options, scaleId);                        
+                        self.coffeeScales.push(scale);                        
+                    }
+                    
+                    scale.state(tick.StateName);
+                    scale.states[tick.StateName].init(tick);
                 };
 
                 $.connection.hub.start()
-                    .done(function() { console.log('Now connected, connection ID=' + $.connection.hub.id); })
-                    .fail(function() { console.log('Could not Connect!'); });
-
-            }
+                    .done(function () { console.log('Now connected, connection ID=' + $.connection.hub.id); })
+                    .fail(function () { console.log('Could not Connect!'); });
+            }          
 
             var options = {};
-            ko.applyBindings(new CoffeeScaleViewModel(options), document.getElementById("coffeescale"));
+            ko.applyBindings(new CoffeeScalesViewModel(options));
         });
     </script>
 }
